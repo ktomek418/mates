@@ -1,0 +1,89 @@
+section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2em;
+    padding: 2em;
+    overflow: auto;
+}
+section > .fa, .fas, .fa-solid {
+    width: 1.3em;
+}
+
+.project{
+    border: 3px solid #707070;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.main-section{
+    display: flex;
+    background: transparent linear-gradient(180deg, #0F335C 0%, #171E45 100%) 0 0 no-repeat padding-box;
+    height: 85%;
+    margin-bottom: 1em;
+}
+.main-section>img{
+    width: 40%;
+    opacity: 0.7;
+}
+
+.buttons-section{
+    background: transparent linear-gradient(180deg, #0F335C 0%, #171E45 100%) 0 0 no-repeat padding-box;
+    font: normal normal normal 20px/27px Segoe UI;
+    height: 15%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.buttons-section > .project-button {
+    background: transparent linear-gradient(180deg, #4D76DD 0%, #171E45 100%) 0 0 no-repeat padding-box;
+    box-shadow: inset 0 6px 6px #00000029;
+    border: 1px solid #707070;
+    border-radius: 28px;
+    width: 35%;
+    color: #EEEEEE;
+    margin: 1em;
+    line-height: 1.75em;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1em;
+}
+
+
+.buttons-section > .project-button >  i{
+    font-size: 1em;
+}
+
+.event-description{
+    list-style-type: none;
+    color:white;
+    font: normal normal normal 16px/20px Segoe UI;
+    height: 100%;
+    padding-left: 1em;
+    margin-bottom: 3em;
+    position: relative;
+}
+.event-description li  p {
+    text-decoration: none;
+    display: inline-block;
+    padding-left: 1em;
+    line-height: 2em;
+    margin: 0.3em;
+}
+.event-description li  h2 {
+    margin-top: 0.3em
+}
+.event-description > li:last-child p{
+    margin-bottom: 0;
+    margin-top: 1em;
+}
+
+
+
+
+
+
+
+
