@@ -3,7 +3,7 @@ body {
     background: transparent linear-gradient(180deg, #2D3C8A 0%, #171E45 100%) 0 0 no-repeat padding-box;
 }
 
-.container {
+.image-container {
     width: 100vw;
     height: 100vh;
     
@@ -23,7 +23,12 @@ body {
 .login-container {
     width: 50%;
 }
-.form {
+
+.register-container {
+    width: 50%;
+}
+
+.login-form, .register-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -36,7 +41,12 @@ body {
     border: 1px solid #707070;
     border-radius: 28px;;
 }
-.form > input {
+
+.register-form{
+    height: 50vh;
+}
+
+form > input,textarea  {
     border: none;
     background: transparent;
     border-bottom: 1px solid white;
@@ -45,18 +55,30 @@ body {
     width: 50%;
     color: white;
 }
-.form > ::placeholder{
+
+form > ::placeholder{
     color:white;
 }
- button {
+
+button, .button {
     background: transparent linear-gradient(180deg, #4D76DD 0%, #171E45 100%) 0 0 no-repeat padding-box;
     box-shadow: inset 0 6px 6px #00000029;
     border: 1px solid #707070;
     border-radius: 28px;
     width: 50%;
     color: #EEEEEE;
+    height: 2.5em;
     margin: 1em;
-    line-height: 2.5em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: normal normal normal 15px/33px Segoe UI;
+}
+
+button:hover, .button:hover{
+    opacity: 0.95;
+    transition: 0.5s;
 }
 
 hr{
@@ -74,6 +96,7 @@ hr{
     align-items: center;
     justify-content: flex-start;
 }
+
 main{
     width: 80%;
     height: 100vh;
@@ -85,66 +108,79 @@ main{
 header{
     display: flex;
     justify-content: space-around;
-    padding: 1em 2em;
+    align-items: center;
     height: 5%;
+    padding-top: 0.2em;
 }
 
 .search-bar{
-    width: 70%;
-    height: 100%;
+    width: 60%;
+    height: 80%;
+    padding-left: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+.search-bar > form
+{
+    width: 100%;
+}
+
 .search-bar > form > input{
     background: #EEEEEE 0 0 no-repeat padding-box;
-    border: 2px solid #EEEEEE;
     border-radius: 27px;
     width: 100%;
+    padding: 0;
     height: 2.5em;
     text-align: center;
-    color: #EEEEEE;
-    box-sizing: border-box;
+    color: #0A2647;
+}
+.search-bar > form > input::placeholder{
+    color: #0A2647;
 }
 
-.open-event-creator{
+#top-button{
     background: transparent linear-gradient(180deg, #4D76DD 0%, #171E45 100%) 0 0 no-repeat padding-box;
     box-shadow: inset 0 6px 6px #00000029;
-    border-radius: 27px;
     border: 1px solid #EEEEEE;
+    border-radius: 35px;
+    width: 14em;
+    margin-left: 5em;
+    text-align: center;
+    letter-spacing: 1px;
+    line-height: 2.5em;
     color: #EEEEEE;
-    letter-spacing: 0.1em;
-    margin: 0;
-
-    width: 20%;
-    height: 2.5em;
-
+    cursor: pointer;
     display: flex;
-    justify-content: space-around;
     align-items: center;
+    justify-content: space-around;
 
 }
-.open-event-creator > i{
-    font-size: 2em;
+#top-button > i{
+    font-size: 1.3em;
 }
 
-@media only screen and (max-device-width: 420px){
-    .container {
-        flex-direction: column;
-    }
-
-    * {
-        font-size: 15px;
-    }
-
-    .login-container, .logo {
-        width: 100%;
-    }
-
-    form {
-        margin: auto;
-    }
-
-    img {
-        height: 7em;
-        margin: 2em;
-    }
+.projects {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2em;
+    padding: 2em;
+    overflow: auto;
 }
+.fa, .fas, .fa-solid {
+    width: 1.3em;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+input:focus{
+    outline-width: 0;
+}
+
+
+
+
 

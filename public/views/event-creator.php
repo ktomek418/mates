@@ -5,49 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/b35c7465a2.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="../css/navigation.css">
-    <link rel="stylesheet" type="text/css" href="../css/event-creator.css">
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="public/css/style.css">
+    <link rel="stylesheet" type="text/css" href="public/css/event-creator-form.css">
     <title>Planned</title>
 </head>
 <body>
 <div class="base-container">
-    <nav>
-        <img src="../img/image2vector.svg">
-        <ul>
-            <li>
-                <form method="POST" action="logout">
-                    <i class="fa fa-calendar"></i>
-                    <button type="submit" class="button">Zaplanowane</button>
-                </form>
-            </li>
-            <li>
-                <form method="POST" action="logout">
-                    <i class="fa fa-globe"></i>
-                    <button type="submit" class="button">Wydarzenia</button>
-                </form>
-            </li>
-            <li>
-                <form method="POST" action="logout">
-                    <i class="fa fa-users"></i>
-                    <button type="submit" class="button">Zaproszenia</button>
-                </form>
-            </li>
-            <li>
-                <form method="POST" action="logout">
-                    <i class="fa fa-gear"></i>
-                    <button type="submit" class="button">Ustawienia</button>
-                </form>
-            </li>
-            <li>
-                <form method="POST" action="logout">
-                    <i class="fa fa-gear"></i>
-                    <button type="submit" class="button">Wyloguj</button>
-                </form>
-            </li>
-        </ul>
-    </nav>
-
+    <?php include('navigation.php') ?>
     <main>
         <header>
             <div class="search-bar">
@@ -55,22 +19,25 @@
                     <input placeholder="Szukaj w wydarzeniach">
                 </form>
             </div>
-            <button class="open-event-creator">
-                <i class="fa-duotone fa-plus"></i>
-                Nowe wydarzenie
-            </button>
+            <div class="button" id="top-button" onclick="window.location.href='/planned'">
+                <i class="fa-solid fa-xmark"></i>
+                Anuluj
+            </div>
         </header>
         <hr>
-        <section id="event-creator">
-                <h1>UPLOAD</h1>
-            <form action="add-event" method="post" ENCTYPE="multipart/form-data">
-                <input name="title" type="text" placeholder="title">
-                <input name="maxParticipants" type="number" placeholder="maxParticipants">
-                <input name="localisation" type="text" placeholder="localisation">
-                <input name="date" type="date" placeholder="date">
-                <input name="duration" type="text" placeholder="duration">
-                <textarea name="description" rows="5" placeholder="description"></textarea>
-                <input type="file" name="file">
+        <section class="event-creator">
+            <form action="addEvent" method="POST" ENCTYPE="multipart/form-data">
+                <h2>Nowe Wydarzenie</h2>
+                <input name="title" type="text" placeholder="Podaj tytuł swojego wydarzenia">
+                <input name="maxParticipants" type="number" placeholder="Podaj liczbę poszukiwanych osób">
+                <input name="localisation" type="text" placeholder="Podaj lokalizacje wydarzenia">
+                <input name="date" type="date" placeholder="Wybierz datę wydarzenia">
+                <input name="duration" type="text" placeholder="Podaj długość wydarzenia">
+                <textarea name="description" rows="4" placeholder="Opisz swoje wydarzenie"></textarea>
+                <label class="custom-file-upload">
+                    <input type="file" name="file" placeholder="">
+                    <i class="fa-solid fa-image"></i>
+                </label>
                 <button type="submit">Zapisz</button>
             </form>
         </section>

@@ -14,7 +14,7 @@
             <img src="public/uploads/<?=$event->getImage() ?>">
             <ul class="event-description">
                 <li>
-                    <h2>Title: <?=$event->getTitle() ?></h2>
+                    <h2><?=$event->getTitle() ?></h2>
                 </li>
                 <li>
                     <i class="fa-solid fa-user-group"></i>
@@ -39,14 +39,20 @@
             </ul>
         </div>
         <div class="buttons-section">
-            <button class="project-button">
-                <i class="fa-solid fa-pen-to-square"></i>
-                Edytuj
-            </button>
-            <button class="project-button">
-                <i class="fa-solid fa-ban"></i>
-                Anuluj
-            </button>
+            <form method="post" action="sendApplication">
+                <input type="hidden" name="eventId" value="<?=$event->getId() ?>">
+                <button class="project-button" type="submit">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    Edytuj
+                </button>
+            </form>
+            <form method="post" action="resign">
+                <input type="hidden" name="eventId" value="<?=$event->getId() ?>">
+                <button class="project-button" type="submit">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    Wycofaj się
+                </button>
+            </form>
         </div>
     </div>
 

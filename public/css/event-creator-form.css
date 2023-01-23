@@ -1,0 +1,67 @@
+.event-creator {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    padding-left: 10%;
+    padding-top: 2em;
+}
+
+.event-creator > form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-radius: 30px;
+    background: #B2B2B2 0 0 no-repeat padding-box;
+    box-shadow: inset 0 6px 6px #00000029;
+    border: 1px solid #707070;
+    padding: 0.5em;
+    opacity: 0.9;
+}
+
+.event-creator > form > input, textarea,.event-creator > form > label{
+    text-align: center;
+    margin: 0.6em;
+    border: 1px solid;
+    width: 50%;
+    border-radius: 15px;
+    background: #EEEEEE 0 0 no-repeat padding-box;
+    color: #0A2647;
+}
+
+label{
+    display: flex;
+    height: 2em;
+    text-align: right;
+    justify-content: right;
+    align-items: center;
+    width: 50%;
+}
+
+label > i{
+    font-size: 1.5em;
+    padding-right: 2em;
+}
+
+label > input{
+    padding-right: 2em;
+    text-align: center;
+}
+
+.event-creator > form > input::placeholder, textarea::placeholder, label::placeholder{
+    color: #0A2647;
+}
+.event-creator > form >  label > input::before{
+    content: "Dodaj zdjęcie dla swojego wydarzenia";
+}
+
+.event-creator > form >  label > input{
+    cursor: pointer;
+}
+
+.event-creator > form >  label > input::-webkit-file-upload-button{
+    visibility: hidden;
+}

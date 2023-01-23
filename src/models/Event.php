@@ -1,28 +1,28 @@
 <?php
 
-class Events
+class Event
 {
     private $id;
     private $title;
+    private $participants;
     private $maxParticipants;
     private $localisation;
     private $date;
     private $duration;
     private $organizerId;
-    private $categoryId;
     private $description;
+    private $image;
 
-    public function __construct($id, $title, $maxParticipants, $localisation, $date, $duration, $organizerId, $categoryId, $description)
+    public function __construct( $title, $maxParticipants, $localisation, $date, $duration, $organizerId, $description, $image)
     {
-        $this->id = $id;
         $this->title = $title;
         $this->maxParticipants = $maxParticipants;
         $this->localisation = $localisation;
         $this->date = $date;
         $this->duration = $duration;
         $this->organizerId = $organizerId;
-        $this->categoryId = $categoryId;
         $this->description = $description;
+        $this->image = $image;
     }
 
     public function getId()
@@ -44,6 +44,18 @@ class Events
     {
         $this->title = $title;
     }
+
+    public function getParticipants()
+    {
+        return $this->participants;
+    }
+
+    public function setParticipants($participants): void
+    {
+        $this->participants = $participants;
+    }
+
+
 
     public function getMaxParticipants()
     {
@@ -95,16 +107,6 @@ class Events
         $this->organizerId = $organizerId;
     }
 
-    public function getCategoryId()
-    {
-        return $this->categoryId;
-    }
-
-    public function setCategoryId($categoryId): void
-    {
-        $this->categoryId = $categoryId;
-    }
-
     public function getDescription()
     {
         return $this->description;
@@ -114,6 +116,18 @@ class Events
     {
         $this->description = $description;
     }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image): void
+    {
+        $this->image = $image;
+    }
+
+
 
 
 

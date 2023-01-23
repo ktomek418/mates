@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/b35c7465a2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="public/css/style.css">
-    <link rel="stylesheet" type="text/css" href="public/css/user-details-form.css">
+    <link rel="stylesheet" type="text/css" href="public/css/user-details.css">
     <title>Planned</title>
 </head>
 <body>
@@ -19,47 +19,24 @@
                     <input placeholder="Szukaj w wydarzeniach">
                 </form>
             </div>
-            <form method="post" action="addEvent">
-                <button type="submit" class="open-event-creator">
-                    <i class="fa-duotone fa-plus"></i>
-                    Nowe wydarzenie
-                </button>
-            </form>
+            <div class="button" id="top-button" onclick="window.location.href='/userProfile'">
+                <i class="fa-solid fa-xmark"></i>
+                Anuluj
+            </div>
         </header>
         <hr>
-        <section class="user-update">
-            <div class="profileImage">
-                <img src="public/uploads/<?=$user->getProfileImage() ?>">
-            </div>
+        <section class="user-profile-editor">
             <form action="updateOrCreateUserDetails" method="POST" ENCTYPE="multipart/form-data">
-                    <ul class="user-description">
-                        <li>
-                            <p>Imię</p>
-                            <input name="name" type="text" placeholder="Podaj nazwę użytownika">
-                        </li>
-                        <li>
-                            <p>Nazwisko</p>
-                            <input name="surname" type="text" placeholder="Podaj imię">
-                        </li>
-                        <li>
-                            <p>Numer telefonu</p>
-                            <input name="phone" type="text" placeholder="Podaj nazwisko">
-                        </li>
-                        <li>
-                            <p>Opis</p>
-                            <textarea name="description" rows="4" placeholder="Dodaj swój opis"></textarea>
-                        </li>
-                        <li>
-                            <p>Wybierz zdjęcie profilowe</p>
-                            <label class="custom-file-upload">
-                                <input type="file" name="file" placeholder="">
-                                <i class="fa-solid fa-image"></i>
-                            </label>
-                        </li>
-                    </ul>
-                <button type="submit" >
-                    Zapisz zmiany
-                </button>
+                <h2>Edytor profilu użytkownika</h2>
+                <input name="name" type="text" placeholder="Imię Użytkownika" value="<?=$user->getName() ?>">
+                <input name="surname" type="text" placeholder="Nazwisko Użytkownika" value="<?=$user->getSurname() ?>">
+                <input name="phone" type="text" placeholder="Numer telefonu użytkownika" value="<?=$user->getPhoneNumber() ?>">
+                <textarea name="description" rows="4" placeholder="Opis Użytkownika" ><?=$user->getDescription() ?></textarea>
+                <label class="custom-file-upload">
+                    <input type="file" name="file" placeholder="">
+                    <i class="fa-solid fa-image"></i>
+                </label>
+                <button type="submit">Zapisz</button>
             </form>
         </section>
 

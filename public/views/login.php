@@ -8,12 +8,12 @@
     <title>LOGIN PAGE</title>
 </head>
 <body>
-    <div class="container">
+    <div class="image-container">
         <div class ="logo">
             <img src="public/img/image2vector.svg">
         </div>
         <div class="login-container">
-        <form class="form" action="login" method="post">
+        <form class="login-form" action="login" method="POST">
             <div class="messages">
                 <?php
                 if(isset($messages)){
@@ -23,9 +23,10 @@
                 }
                 ?>
             </div>
-            <input name= "email" type="text" placeholder="email" >
-            <input type="password" name="password" placeholder="hasło">
-            <button type="submit">LOGIN</button>
+            <input name= "email" type="text" placeholder="Email" >
+            <input type="password" name="password" placeholder="Hasło">
+            <button type="submit">ZALOGUJ</button>
+            <div class="button" onclick="window.location.href='/register'">REJESTRACJA</div>
         </form>
         </div>
     </div>

@@ -9,8 +9,9 @@ class DefaultController extends AppController {
         $this->render('login');
     }
 
-    public function planned()
-    {
-        $this->render('planned');
+    public function logout() {
+        $this->render('login');
     }
+
+
 }

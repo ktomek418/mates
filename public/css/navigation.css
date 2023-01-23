@@ -6,18 +6,6 @@ nav{
     justify-content: flex-start;
 }
 
-.button{
-    background: transparent linear-gradient(180deg, #4D76DD 0%, #171E45 100%) 0 0 no-repeat padding-box;
-    box-shadow: inset 0 6px 6px #00000029;
-    border: 1px solid #EEEEEE;
-    border-radius: 35px;
-    width: 7em;
-    margin-left: 3em;
-    text-align: center;
-    letter-spacing: 1px;
-    color: #EEEEEE;
-}
-
 nav > ul{
     list-style-type: none;
     color:white;
@@ -28,33 +16,52 @@ nav > ul{
     width: calc(100% - 50px);
     position: relative;
 }
-nav > ul> li{
+
+nav > ul > li{
     text-align: left;
     margin-bottom: 1.5em;
     width: 100%;
 }
+
 nav > ul > li:last-child{
     position: absolute;
     bottom: 0;
     width: 100%;
 }
-nav > ul > li > a {
-    text-decoration: none;
-    display: inline-block;
-    line-height: 2em;
-    border: 3px solid #EEEEEE;
-}
+
+
 nav > ul > li > i {
-    font-size: 1.5em;
+    font-size: 1.8em;
 }
 
-.buttons-section > div{
-    text-decoration: none;
-    display: inline-block;
-    line-height: 2em;
+nav > ul > li{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
+
+#nav-button{
+    background: transparent linear-gradient(180deg, #4D76DD 0%, #171E45 100%) 0 0 no-repeat padding-box;
+    box-shadow: inset 0 6px 6px #00000029;
+    border: 1px solid #EEEEEE;
+    border-radius: 35px;
+    width: 14em;
+    margin-left: 5em;
+    text-align: center;
+    letter-spacing: 1px;
+    line-height: 2.6em;
+    height: 2.7em;
+    color: #EEEEEE;
+    cursor: pointer;
+}
+
+#nav-button:hover{
+    opacity: 0.8;
+    transition: 0.5s;
+}
+
 
 .fa, .fas, .fa-solid {
-    width: 1em;
+    width: 1.3em;
 }
 

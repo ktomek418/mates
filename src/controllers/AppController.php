@@ -32,4 +32,18 @@ class AppController {
         }
         print $output;
     }
+
+    protected function checkAuth(): void
+    {
+        session_start();
+        if (!isset($_SESSION['id'])) {
+            $this->redirect("login");
+        }
+    }
+
+    protected function redirect($path): void
+    {
+        $url = "http://$_SERVER[HTTP_HOST]";
+        header("Location: {$url}/{$path}");
+    }
 }
