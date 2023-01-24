@@ -22,7 +22,7 @@
             </li>
             <li>
                 <i class="fa fa-users"></i>
-                <div class="button" id="nav-button" onclick="window.location.href='/application'">Zaproszenia</div>
+                <div class="button" id="nav-button" onclick="window.location.href='/receivedApplication'">Zaproszenia</div>
             </li>
             <li>
                 <i class="fa fa-gear"></i>

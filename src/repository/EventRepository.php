@@ -2,6 +2,7 @@
 
 require_once 'Repository.php';
 require_once __DIR__ . '/../models/Event.php';
+require_once __DIR__ . '/../models/EventApplication.php';
 
 class EventRepository extends Repository
 {
@@ -160,7 +161,84 @@ class EventRepository extends Repository
             $_SESSION['id'],
             $eventId
         ]);
+    }
 
+    public function acceptApplication($applicationId)
+    {
+        $stmt = $this->database->connect()->prepare(
+            'select * from event_applications where id = :id'
+        );
+        $stmt->bindParam(':id', $applicationId, PDO::PARAM_STR);
+        $stmt->execute();
+        $application = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $stmt = $this->database->connect()->prepare(
+            'insert into event_participants (id_user, id_event)
+                values (?,?)'
+        );
+        $stmt->execute([
+            $application['id_user'],
+            $application['id_event']
+        ]);
+
+        $stmt = $this->database->connect()->prepare(
+            'delete from event_applications where id = :id'
+        );
+        $stmt->bindParam(':id', $applicationId, PDO::PARAM_STR);
+        $stmt->execute();
+    }
+
+    public function cancelApplication($applicationId)
+    {
+        $stmt = $this->database->connect()->prepare(
+            'delete from event_applications where id = :id'
+        );
+        $stmt->bindParam(':id', $applicationId, PDO::PARAM_STR);
+        $stmt->execute();
+    }
+
+    public function getReceivedApplication()
+    {
+        $stmt = $this->database->connect()->prepare(
+            'select ep.id applicationId, e.title eventTitle, u.user_name userName
+                   from event_applications ep
+                   join events e on ep.id_event = e.id
+                   join users u on ep.id_user = u.id
+                   where id_event in (select id from events where id_organizer= :id)');
+        $stmt->bindParam(':id', $_SESSION['id'], PDO::PARAM_STR);
+        $stmt->execute();
+        $applications = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = [];
+        foreach ($applications as $application) {
+            $result[] = new EventApplication(
+                $application['applicationid'],
+                $application['username'],
+                $application['eventtitle']
+            );
+        }
+        return $result;
+    }
+
+    public function getUserApplications()
+    {
+        $stmt = $this->database->connect()->prepare(
+            'select ep.id applicationId, e.title eventTitle, u.user_name userName
+                   from event_applications ep
+                   join events e on ep.id_event = e.id
+                   join users u on ep.id_user = u.id
+                   where id_user= :id');
+        $stmt->bindParam(':id', $_SESSION['id'], PDO::PARAM_STR);
+        $stmt->execute();
+        $applications = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = [];
+        foreach ($applications as $application) {
+            $result[] = new EventApplication(
+                $application['applicationid'],
+                $application['username'],
+                $application['eventtitle']
+            );
+        }
+        return $result;
     }
 
 }

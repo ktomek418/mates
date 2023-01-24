@@ -63,7 +63,7 @@ form > ::placeholder{
 button, .button {
     background: transparent linear-gradient(180deg, #4D76DD 0%, #171E45 100%) 0 0 no-repeat padding-box;
     box-shadow: inset 0 6px 6px #00000029;
-    border: 1px solid #707070;
+    border: 1px solid #EEEEEE;
     border-radius: 28px;
     width: 50%;
     color: #EEEEEE;
@@ -179,6 +179,64 @@ header{
 input:focus{
     outline-width: 0;
 }
+
+.applications {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.application{
+    padding-top: 1em;
+    width: 80%;
+    height: 8%;
+    display: flex;
+    align-items: center;
+}
+.applications > hr {
+    width: 90%;
+    height: 2px;
+    background: #EEEEEE;
+    border: 0;
+}
+.application-info {
+    width: 60%;
+}
+
+
+.application-info > p {
+    text-align: left;
+    font: normal normal normal 16px/22px Segoe UI;
+    letter-spacing: 0;
+    color: #EEEEEE;
+    margin-bottom: 0;
+}
+
+.application-info > h3 {
+    padding-left: 2em;
+    margin-top: 0;
+    margin-bottom: 0.3em;
+    text-align: left;
+    font: normal normal normal 20px/30px Segoe UI;
+    letter-spacing: 0;
+    color: #EEEEEE;
+}
+
+.application-actions {
+    padding-top: 2em;
+    width: 30%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+.application-actions > form > .application-button {
+    width: 100%;
+    border: 1px solid #EEEEEE;
+    display: flex;
+    justify-content: space-around;
+}
+
 
 
 

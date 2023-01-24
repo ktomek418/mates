@@ -2,6 +2,7 @@
 
 require_once 'AppController.php';
 require_once __DIR__ . '/../models/Event.php';
+require_once __DIR__ . '/../models/EventApplication.php';
 require_once __DIR__.'/../repository/EventRepository.php';
 
 class EventController extends AppController
@@ -76,6 +77,38 @@ class EventController extends AppController
         $this->redirect("events");;
     }
 
+    public function acceptApplication()
+    {
+        $this->checkAuth();
+        if ($this->isPost())
+        {
+            $this->eventRepository->acceptApplication($_POST['applicationId']);
+        }
+        $this->redirect("receivedApplication");;
+    }
+
+    public function cancelApplication()
+    {
+        $this->checkAuth();
+        if ($this->isPost())
+        {
+            $this->eventRepository->cancelApplication($_POST['applicationId']);
+        }
+        $this->redirect("receivedApplication");;
+    }
+
+    public function receivedApplication()
+    {
+        $this->checkAuth();
+        $applications = $this->eventRepository->getReceivedApplication();
+        $this->render('received-application', ['applications' => $applications]);
+    }
+    public function myApplication()
+    {
+        $this->checkAuth();
+        $applications = $this->eventRepository->getUserApplications();
+        $this->render('my-application', ['applications' => $applications]);
+    }
 
 
     private function validate(array $file): bool

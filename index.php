@@ -18,5 +18,9 @@ Router::get('newEvent', 'EventController');
 Router::post('addEvent', 'EventController');
 Router::post('sendApplication', 'EventController');
 Router::post('resign', 'EventController');
+Router::get('receivedApplication', 'EventController');
+Router::get('myApplication', 'EventController');
+Router::post('acceptApplication', 'EventController');
+Router::post('cancelApplication', 'EventController');
 
 Router::run($path);
