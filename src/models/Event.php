@@ -13,7 +13,7 @@ class Event
     private $description;
     private $image;
 
-    public function __construct( $title, $maxParticipants, $localisation, $date, $duration, $organizerId, $description, $image)
+    public function __construct( $title, $maxParticipants, $localisation, $date, $duration, $organizerId, $description)
     {
         $this->title = $title;
         $this->maxParticipants = $maxParticipants;
@@ -22,7 +22,6 @@ class Event
         $this->duration = $duration;
         $this->organizerId = $organizerId;
         $this->description = $description;
-        $this->image = $image;
     }
 
     public function getId()
@@ -54,8 +53,6 @@ class Event
     {
         $this->participants = $participants;
     }
-
-
 
     public function getMaxParticipants()
     {

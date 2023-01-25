@@ -21,24 +21,26 @@
             </div>
             <div class="button" id="top-button" onclick="window.location.href='/planned'">
                 <i class="fa-solid fa-xmark"></i>
-                Anuluj
+                Anuluj edycje
             </div>
         </header>
         <hr>
         <section class="event-creator">
-            <form action="addEvent" method="POST" ENCTYPE="multipart/form-data">
-                <h2>Nowe Wydarzenie</h2>
-                <input name="title" type="text" placeholder="Podaj tytuł swojego wydarzenia">
-                <input name="maxParticipants" type="number" placeholder="Podaj liczbę poszukiwanych osób">
-                <input name="localisation" type="text" placeholder="Podaj lokalizacje wydarzenia">
-                <input name="date" type="date" placeholder="Wybierz datę wydarzenia">
-                <input name="duration" type="text" placeholder="Podaj długość wydarzenia">
-                <textarea name="description" rows="4" placeholder="Opisz swoje wydarzenie"></textarea>
+            <form action="updateEvent" method="POST" ENCTYPE="multipart/form-data">
+                <h2>Edycja wydarzenia</h2>
+                <input name="title" type="text" placeholder="Podaj tytuł swojego wydarzenia" value="<?=$event->getTitle() ?>">
+                <input name="localisation" type="text" placeholder="Podaj lokalizacje wydarzenia" value="<?=$event->getLocalisation() ?>">
+                <input name="date" type="date" placeholder="Wybierz datę wydarzenia" value="<?=$event->getDate() ?>">
+                <input name="duration" type="text" placeholder="Podaj długość wydarzenia" value="<?=$event->getDuration() ?>">
+                <textarea name="description" rows="4" placeholder="Opisz swoje wydarzenie">
+                    <?=$event->getDescription()?>
+                </textarea>
                 <label class="custom-file-upload">
                     <input type="file" name="file" placeholder="">
                     <i class="fa-solid fa-image"></i>
                 </label>
-                <button type="submit">Zapisz</button>
+                <input type="hidden" name="eventId" value="<?=$event->getId() ?>">
+                <button type="submit">Zapisz zmiany</button>
             </form>
         </section>
 

@@ -80,7 +80,6 @@ class UserRepository extends Repository
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $id = $result['lastid'];
-        echo $id;
         $stmt = $this->database->connect()->prepare('
             INSERT INTO users (user_name, password, email, id_user_details) 
             VALUES (?,?,?,?)

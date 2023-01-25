@@ -27,7 +27,7 @@ class SecurityController extends AppController {
         }
 
         $email = $_POST['email'];
-        $password = $_POST['password'];
+        $password = md5($_POST['password']);
 
         $user = $this->userRepository->getUser($email);
         if(!$user){
@@ -74,7 +74,7 @@ class SecurityController extends AppController {
             $this->render('register', ['messages' => ['Hasła nie są ze sobą zgodne!']]);
         }
 
-        $user = new User($email, $password, $name);
+        $user = new User($email, md5($password), $name);
         $this->userRepository->addUser($user);
         $this->render('login', ['messages' => ['Możesz się zalogować']]);
 

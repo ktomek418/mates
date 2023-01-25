@@ -23,15 +23,17 @@ class EventController extends AppController
     public function planned()
     {
         $this->checkAuth();
+        $planned = true;
         $events = $this->eventRepository->getUserEvents($_SESSION['id']);
-        $this->render('planned', ['events' => $events]);
+        $this->render('events', ['events' => $events, 'planned' => $planned]);
     }
 
     public function events()
     {
         $this->checkAuth();
         $events = $this->eventRepository->getEvents();
-        $this->render('events', ['events' => $events]);
+        $planned = false;
+        $this->render('events', ['events' => $events, 'planned' => $planned]);
     }
 
     public function newEvent()
@@ -40,18 +42,59 @@ class EventController extends AppController
         $this->render('event-creator');
     }
 
+    public function eventEditor()
+    {
+        $this->checkAuth();
+        $event = $this->eventRepository->getEvent($_POST['eventId']);
+        $this->render('event-editor', ['event' => $event]);
+    }
+
+    public function updateEvent()
+    {
+        $this->checkAuth();
+        if ($this->isPost())
+        {
+            $event = $this->eventRepository->getEvent($_POST['eventId']);
+            if(is_uploaded_file($_FILES['file']['tmp_name']) && $this->validate($_FILES['file']))
+            {
+                move_uploaded_file(
+                    $_FILES['file']['tmp_name'],
+                    dirname(__DIR__) . self::UPLOAD_DIRECTORY . $_FILES['file']['name']
+                );
+                $event->setImage($_FILES['file']['name']);
+            }
+
+            $event->setTitle($_POST['title']);
+            $event->setLocalisation($_POST['localisation']);
+            $event->setDate($_POST['date']);
+            $event->setDuration($_POST['duration']);
+            $event->setDescription($_POST['description']);
+
+            $this->eventRepository->updateEvent($event);
+        }
+        $this->redirect("planned");
+    }
+
 
     public function addEvent()
     {
         $this->checkAuth();
-        if ($this->isPost() && is_uploaded_file($_FILES['file']['tmp_name']) && $this->validate($_FILES['file']))
+        if ($this->isPost())
         {
             move_uploaded_file(
                 $_FILES['file']['tmp_name'],
                 dirname(__DIR__) . self::UPLOAD_DIRECTORY . $_FILES['file']['name']
             );
 
-            $event = new Event($_POST['title'], $_POST['maxParticipants'], $_POST['localisation'], $_POST['date'], $_POST['duration'], $_SESSION['id'], $_POST['description'], $_FILES['file']['name']);
+            $event = new Event($_POST['title'], $_POST['maxParticipants'], $_POST['localisation'], $_POST['date'], $_POST['duration'], $_SESSION['id'], $_POST['description']);
+            if(is_uploaded_file($_FILES['file']['tmp_name']) && $this->validate($_FILES['file']))
+            {
+                move_uploaded_file(
+                    $_FILES['file']['tmp_name'],
+                    dirname(__DIR__) . self::UPLOAD_DIRECTORY . $_FILES['file']['name']
+                );
+                $event->setImage($_FILES['file']['name']);
+            }
             $this->eventRepository->addEvent($event);
         }
         $this->redirect("planned");
@@ -101,13 +144,15 @@ class EventController extends AppController
     {
         $this->checkAuth();
         $applications = $this->eventRepository->getReceivedApplication();
-        $this->render('received-application', ['applications' => $applications]);
+        $myApplications = false;
+        $this->render('event-application', ['applications' => $applications, 'myApplications' => $myApplications]);
     }
     public function myApplication()
     {
         $this->checkAuth();
+        $myApplications = true;
         $applications = $this->eventRepository->getUserApplications();
-        $this->render('my-application', ['applications' => $applications]);
+        $this->render('event-application', ['applications' => $applications, 'myApplications' => $myApplications]);
     }
 
 

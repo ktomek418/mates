@@ -26,7 +26,7 @@
             <hr>
             <section class="projects">
                 <?php foreach ($events as $event): ?>
-                    <?php include('publicEvent.php') ?>
+                    <?php include('single-event.php') ?>
                 <?php endforeach; ?>
             </section>
 

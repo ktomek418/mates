@@ -21,7 +21,7 @@ class EventRepository extends Repository
             return null;
         }
 
-        return new Event(
+        $newEvent =  new Event(
             $event['title'],
             $event['max_participants'],
             $event['localisation'],
@@ -29,8 +29,10 @@ class EventRepository extends Repository
             $event['duration'],
             $event['id_organizer'],
             $event['description'],
-            $event['image']
         );
+        $newEvent->setId($event['id']);
+        $newEvent->setId($event['image']);
+        return $newEvent;
     }
 
     public function getUserEvents($userId)
@@ -53,10 +55,10 @@ class EventRepository extends Repository
                 $event['date'],
                 $event['duration'],
                 $event['id_organizer'],
-                $event['description'],
-                $event['image']
+                $event['description']
             );
             $newEvent->setId($event['id_event']);
+            $newEvent->setImage($event['image']);
             $newEvent->setParticipants($event['participants']);
             $result[] = $newEvent;
         }
@@ -86,9 +88,9 @@ class EventRepository extends Repository
                 $event['duration'],
                 $event['id_organizer'],
                 $event['description'],
-                $event['image']
             );
             $newEvent->setId($event['id']);
+            $newEvent->setImage($event['image']);
             $newEvent->setParticipants($event['participants']);
             $result[] = $newEvent;
         }
@@ -101,6 +103,10 @@ class EventRepository extends Repository
             'insert into events (title, max_participants, localisation, date, duration, id_organizer, id_category, description, image)
                 values (?,?,?,?,?,?,?,?,?)'
         );
+        if(is_null($event->getImage()))
+        {
+            $event->setImage('defaultEvent.jpg');
+        }
         $stmt->execute([
             $event->getTitle(),
             $event->getMaxParticipants(),
@@ -127,6 +133,31 @@ class EventRepository extends Repository
             $_SESSION['id'],
             $id
         ]);
+    }
+
+    public function updateEvent(Event $event)
+    {
+
+        $stat = $this->database->connect()->prepare(
+            'update events set title= :title, localisation= :localisation, date = :date, duration= :duration,
+                  description= :description, image = :image
+                    where id= :id');
+        $title = $event->getTitle();
+        $localisation = $event->getLocalisation();
+        $date = $event->getDate();
+        $duration = $event->getDuration();
+        $description = $event->getDescription();
+        $image = $event->getImage();
+        $id = $event->getId();
+
+        $stat->bindParam(':title', $title, PDO::PARAM_STR);
+        $stat->bindParam(':localisation', $localisation, PDO::PARAM_STR);
+        $stat->bindParam(':date', $date, PDO::PARAM_STR);
+        $stat->bindParam(':duration', $duration, PDO::PARAM_STR);
+        $stat->bindParam(':description', $description, PDO::PARAM_STR);
+        $stat->bindParam(':image', $image, PDO::PARAM_STR);
+        $stat->bindParam(':id', $id, PDO::PARAM_STR);
+        $stat->execute();
     }
 
     public function resign($eventId)
