@@ -10,7 +10,7 @@
 </head>
 <body>
     <nav>
-        <img src="public/img/image2vector.svg">
+        <img src="public/img/logo.svg">
         <ul>
             <li>
                 <i class="fa fa-calendar"></i>

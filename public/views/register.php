@@ -10,7 +10,7 @@
 <body>
     <div class="image-container">
         <div class ="logo">
-            <img src="public/img/image2vector.svg">
+            <img src="public/img/logo.svg">
         </div>
         <div class="register-container">
         <form class="register-form" action="register" method="POST">
