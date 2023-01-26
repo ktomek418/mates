@@ -3,8 +3,10 @@
 class EventApplication
 {
     private $id;
+    private $userId;
     private $userName;
     private $eventTitle;
+    private $image;
 
     public function __construct($id, $userName, $eventTitle)
     {
@@ -22,6 +24,18 @@ class EventApplication
     {
         $this->id = $id;
     }
+
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    public function setUserId($userId): void
+    {
+        $this->userId = $userId;
+    }
+
+
 
     public function getUserName()
     {
@@ -42,6 +56,18 @@ class EventApplication
     {
         $this->eventTitle = $eventTitle;
     }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image): void
+    {
+        $this->image = $image;
+    }
+
+
 
 
 

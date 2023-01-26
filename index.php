@@ -12,6 +12,7 @@ Router::post('logout', 'SecurityController');
 Router::post('register', 'SecurityController');
 
 Router::get('userProfile', 'UserController');
+Router::get('user', 'UserController');
 Router::get('userProfileEditor', 'UserController');
 Router::post('updateOrCreateUserDetails', 'UserController');
 

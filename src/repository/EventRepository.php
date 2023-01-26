@@ -236,21 +236,25 @@ class EventRepository extends Repository
         $result = [];
 
         $stmt = $this->database->connect()->prepare(
-            'select ep.id applicationId, e.title eventTitle, u.user_name userName
+            'select ep.id applicationId, e.title eventTitle, u.user_name userName, ud.image userImage, u.id userId
                    from event_applications ep
                    join events e on ep.id_event = e.id
                    join users u on ep.id_user = u.id
+                   join user_details ud on ud.id = u.id_user_details
                    where id_event in (select id from events where id_organizer= :id)');
         $stmt->bindParam(':id', $_SESSION['id'], PDO::PARAM_STR);
         $stmt->execute();
         $applications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($applications as $application) {
-            $result[] = new EventApplication(
+            $newApplication = new EventApplication(
                 $application['applicationid'],
                 $application['username'],
                 $application['eventtitle']
             );
+            $newApplication->setImage($application['userimage']);
+            $newApplication->setUserId($application['userid']);
+            $result[] = $newApplication;
         }
         return $result;
     }
@@ -260,21 +264,25 @@ class EventRepository extends Repository
         $result = [];
 
         $stmt = $this->database->connect()->prepare(
-            'select ep.id applicationId, e.title eventTitle, u.user_name userName
+            'select ep.id applicationId, e.title eventTitle, u.user_name userName, ud.image userImage, e.id_organizer organizerId
                    from event_applications ep
                    join events e on ep.id_event = e.id
-                   join users u on ep.id_user = u.id
+                   join users u on e.id_organizer = u.id
+                   join user_details ud on ud.id = u.id_user_details
                    where id_user= :id');
         $stmt->bindParam(':id', $_SESSION['id'], PDO::PARAM_STR);
         $stmt->execute();
         $applications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($applications as $application) {
-            $result[] = new EventApplication(
+            $newApplication = new EventApplication(
                 $application['applicationid'],
                 $application['username'],
                 $application['eventtitle']
             );
+            $newApplication->setImage($application['userimage']);
+            $newApplication->setUserId($application['organizerid']);
+            $result[] = $newApplication;
         }
         return $result;
     }

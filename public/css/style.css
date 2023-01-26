@@ -193,6 +193,12 @@ input:focus{
     display: flex;
     align-items: center;
 }
+
+.application > img {
+    width: 3em;
+    height: 3em;
+    border-radius: 28px;
+}
 .applications > hr {
     width: 90%;
     height: 2px;
@@ -200,17 +206,30 @@ input:focus{
     border: 0;
 }
 .application-info {
+    padding-left: 1em;
     width: 60%;
 }
 
 
-.application-info > p {
+.application-info > a {
     text-align: left;
-    font: normal normal normal 16px/22px Segoe UI;
+    font: normal normal normal 15px/19px Segoe UI;
     letter-spacing: 0;
     color: #EEEEEE;
     margin-bottom: 0;
+    border: 0;
 }
+
+.application-info > a:link { text-decoration: none; }
+
+
+.application-info > a:visited { text-decoration: none; }
+
+
+.application-info > a:hover { text-decoration: none; }
+
+
+.application-info > a:active { text-decoration: none; }
 
 .application-info > h3 {
     padding-left: 2em;

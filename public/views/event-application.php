@@ -36,9 +36,10 @@
                 <?php foreach ($applications as $application): ?>
                     <?php if ($myApplications == true): ?>
                         <div class="application">
+                            <img src="public/uploads/<?=$application->getImage() ?>">
                             <div class="application-info">
-                                <p>Użytkownik <?=$application->getUserName() ?></p>
-                                <h3>Otrzymał twoje zgłoszenie do wydarzenia <?=$application->getEventTitle() ?></h3>
+                                <a href="user?id=<?=$application->getUserId() ?>>">Użytkownik <?=$application->getUserName() ?></a>
+                                <h3>Otrzymał twoje zgłoszenie do wydarzenia <?=$application->getEventTitle() ?>, którego jest organizatorem</h3>
                             </div>
                             <div class="application-actions">
                                 <form method="post" action="/cancelApplication">
@@ -52,8 +53,9 @@
                         </div>
                     <?php else: ?>
                         <div class="application">
+                            <img src="public/uploads/<?=$application->getImage() ?>">
                             <div class="application-info">
-                                <p>Użytkownik <?=$application->getUserName() ?></p>
+                                <a href="user?id=<?=$application->getUserId() ?>>">Użytkownik <?=$application->getUserName() ?></a>
                                 <h3>Chciałby dołączyć do wydarzenia <?=$application->getEventTitle() ?>, którego jesteś organizatorem</h3>
                             </div>
                             <div class="application-actions">

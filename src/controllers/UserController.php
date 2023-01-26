@@ -20,6 +20,16 @@ class UserController extends AppController
         $this->render('user-profile', ['user' => $user]);
     }
 
+    public function user()
+    {
+        if($this->isGet())
+        {
+            $this->checkAuth();
+            $user = $this->userRepository->getUserById($_GET['id']);
+            $this->render('user-profile', ['user' => $user]);
+        }
+    }
+
     public function userProfileEditor()
     {
         $this->checkAuth();
