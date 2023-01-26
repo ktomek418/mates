@@ -39,6 +39,8 @@ class SecurityController extends AppController {
         }
 
         $_SESSION['id'] = $user->getId();
+        $_SESSION['admin'] = true;
+
 
         $url = "http://$_SERVER[HTTP_HOST]";
         header("Location: {$url}/planned");

@@ -39,6 +39,13 @@ class EventController extends AppController
         $this->checkAuth();
         $this->render('event-creator');
     }
+    public function eventEditor()
+    {
+        $this->checkAuth();
+        $event = $this->eventRepository->getEvent($_POST['eventId']);
+        $this->render('event-editor', ['event' => $event]);
+    }
+
     public function addEvent()
     {
         $this->checkAuth();
@@ -56,13 +63,6 @@ class EventController extends AppController
             $this->eventRepository->addEvent($event);
         }
         $this->redirect("planned");
-    }
-
-    public function eventEditor()
-    {
-        $this->checkAuth();
-        $event = $this->eventRepository->getEvent($_POST['eventId']);
-        $this->render('event-editor', ['event' => $event]);
     }
     public function updateEvent()
     {
@@ -88,6 +88,15 @@ class EventController extends AppController
             $this->eventRepository->updateEvent($event);
         }
         $this->redirect("planned");
+    }
+    public function deleteEvent()
+    {
+        $this->checkAuth();
+        if ($this->isPost())
+        {
+            $this->eventRepository->deleteEvent($_POST['eventId']);
+        }
+        $this->redirect("events");
     }
 
     public function resign()

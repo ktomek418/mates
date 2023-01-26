@@ -164,15 +164,21 @@ class EventRepository extends Repository
         $stat->execute();
     }
 
+    public function deleteEvent($eventId)
+    {
+        $stmt = $this->database->connect()->prepare(
+            'delete from events where id = :id'
+        );
+        $stmt->bindParam(':id', $eventId, PDO::PARAM_STR);
+        $stmt->execute();
+    }
+
     public function resign($eventId)
     {
         $event = $this->getEvent($eventId);
         if($event->getOrganizerId() == $_SESSION['id'])
         {
-            $stmt = $this->database->connect()->prepare(
-                'delete from events where id = :id'
-            );
-            $stmt->bindParam(':id', $eventId, PDO::PARAM_STR);
+            $this->deleteEvent($eventId);
         }
         else
         {
@@ -181,8 +187,8 @@ class EventRepository extends Repository
             );
             $stmt->bindParam(':id_event', $eventId, PDO::PARAM_STR);
             $stmt->bindParam(':id_user', $_SESSION['id'], PDO::PARAM_STR);
+            $stmt->execute();
         }
-        $stmt->execute();
     }
 
     public function sendApplication($eventId)

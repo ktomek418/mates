@@ -25,6 +25,7 @@ class UserRepository extends Repository
             $user['user_name']
         );
         $newUser->setId($user['id']);
+        $newUser->setIsAdmin($user['admin']);
 
         return $newUser;
     }

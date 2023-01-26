@@ -68,13 +68,15 @@
                         <p>Dołącz</p>
                     </button>
                 </form>
-                <form method="post" >
-                    <input type="hidden" name="eventId" value="<?=$event->getId() ?>">
-                    <button class="project-button" type="submit">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                        <p>Zapisz</p>
-                    </button>
-                </form>
+                <?php if ($_SESSION['admin'] == true): ?>
+                    <form method="post" action="/deleteEvent">
+                        <input type="hidden" name="eventId" value="<?=$event->getId() ?>">
+                        <button class="project-button" type="submit">
+                            <i class="fa-solid fa-delete-left"></i>
+                            <p>Skasuj</p>
+                        </button>
+                    </form>
+                <?php endif; ?>
             <?php endif; ?>
 
         </div>

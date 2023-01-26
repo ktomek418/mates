@@ -25,6 +25,7 @@ Router::get('newEvent', 'EventController');
 Router::get('eventEditor', 'EventController');
 Router::post('addEvent', 'EventController');
 Router::post('updateEvent', 'EventController');
+Router::post('deleteEvent', 'EventController');
 
 Router::post('sendApplication', 'EventController');
 Router::post('resign', 'EventController');
