@@ -31,11 +31,7 @@ class SecurityController extends AppController {
 
         $user = $this->userRepository->getUser($email);
         if(!$user){
-            $this->render('login', ['messages' => ['Użytkownik nie istnieje!']]);
-        }
-
-        if ($user->getEmail() !== $email) {
-            $this->render('login', ['messages' => ['Użytkownik o podanym emailu nie istnieje!']]);
+            $this->render('login', ['messages' => ['Użytkownik o podanym e-mailu nie istnieje!']]);
         }
 
         if ($user->getPassword() !== $password) {
@@ -76,6 +72,7 @@ class SecurityController extends AppController {
 
         $user = new User($email, md5($password), $name);
         $this->userRepository->addUser($user);
+
         $this->render('login', ['messages' => ['Możesz się zalogować']]);
 
     }

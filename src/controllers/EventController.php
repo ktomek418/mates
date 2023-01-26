@@ -7,7 +7,6 @@ require_once __DIR__.'/../repository/EventRepository.php';
 
 class EventController extends AppController
 {
-    private $messages = [];
     private $eventRepository;
 
     const MAX_FILE_SIZE = 1024 * 1024;
@@ -27,7 +26,6 @@ class EventController extends AppController
         $events = $this->eventRepository->getUserEvents($_SESSION['id']);
         $this->render('events', ['events' => $events, 'planned' => $planned]);
     }
-
     public function events()
     {
         $this->checkAuth();
@@ -41,6 +39,24 @@ class EventController extends AppController
         $this->checkAuth();
         $this->render('event-creator');
     }
+    public function addEvent()
+    {
+        $this->checkAuth();
+        if ($this->isPost())
+        {
+            $event = new Event($_POST['title'], $_POST['maxParticipants'], $_POST['localisation'], $_POST['date'], $_POST['duration'], $_SESSION['id'], $_POST['description']);
+            if(is_uploaded_file($_FILES['file']['tmp_name']) && $this->validate($_FILES['file']))
+            {
+                move_uploaded_file(
+                    $_FILES['file']['tmp_name'],
+                    dirname(__DIR__) . self::UPLOAD_DIRECTORY . $_FILES['file']['name']
+                );
+                $event->setImage($_FILES['file']['name']);
+            }
+            $this->eventRepository->addEvent($event);
+        }
+        $this->redirect("planned");
+    }
 
     public function eventEditor()
     {
@@ -48,7 +64,6 @@ class EventController extends AppController
         $event = $this->eventRepository->getEvent($_POST['eventId']);
         $this->render('event-editor', ['event' => $event]);
     }
-
     public function updateEvent()
     {
         $this->checkAuth();
@@ -75,31 +90,6 @@ class EventController extends AppController
         $this->redirect("planned");
     }
 
-
-    public function addEvent()
-    {
-        $this->checkAuth();
-        if ($this->isPost())
-        {
-            move_uploaded_file(
-                $_FILES['file']['tmp_name'],
-                dirname(__DIR__) . self::UPLOAD_DIRECTORY . $_FILES['file']['name']
-            );
-
-            $event = new Event($_POST['title'], $_POST['maxParticipants'], $_POST['localisation'], $_POST['date'], $_POST['duration'], $_SESSION['id'], $_POST['description']);
-            if(is_uploaded_file($_FILES['file']['tmp_name']) && $this->validate($_FILES['file']))
-            {
-                move_uploaded_file(
-                    $_FILES['file']['tmp_name'],
-                    dirname(__DIR__) . self::UPLOAD_DIRECTORY . $_FILES['file']['name']
-                );
-                $event->setImage($_FILES['file']['name']);
-            }
-            $this->eventRepository->addEvent($event);
-        }
-        $this->redirect("planned");
-    }
-
     public function resign()
     {
         $this->checkAuth();
@@ -109,7 +99,6 @@ class EventController extends AppController
         }
         $this->redirect("planned");
     }
-
     public function sendApplication()
     {
         $this->checkAuth();
@@ -129,7 +118,6 @@ class EventController extends AppController
         }
         $this->redirect("receivedApplication");;
     }
-
     public function cancelApplication()
     {
         $this->checkAuth();

@@ -16,12 +16,12 @@ class EventRepository extends Repository
 
         $event = $stat->fetch(PDO::FETCH_ASSOC);
 
-        if($event == false)
+        if($event == null)
         {
             return null;
         }
 
-        $newEvent =  new Event(
+        $newEvent = new Event(
             $event['title'],
             $event['max_participants'],
             $event['localisation'],
@@ -31,41 +31,11 @@ class EventRepository extends Repository
             $event['description'],
         );
         $newEvent->setId($event['id']);
-        $newEvent->setId($event['image']);
+        $newEvent->setImage($event['image']);
         return $newEvent;
     }
 
-    public function getUserEvents($userId)
-    {
-        $result = [];
-        $stmt = $this->database->connect()->prepare(
-            'select *, (select count(*) from event_participants where id_event = events.id) as participants
-                    from events join event_participants on events.id=event_participants.id_event
-                    where event_participants.id_user= :userId'
-        );
-        $stmt->bindParam(':userId', $userId, PDO::PARAM_STR);
-        $stmt->execute();
-        $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach ($events as $event) {
-            $newEvent = new Event(
-                $event['title'],
-                $event['max_participants'],
-                $event['localisation'],
-                $event['date'],
-                $event['duration'],
-                $event['id_organizer'],
-                $event['description']
-            );
-            $newEvent->setId($event['id_event']);
-            $newEvent->setImage($event['image']);
-            $newEvent->setParticipants($event['participants']);
-            $result[] = $newEvent;
-        }
-        return $result;
-    }
-
-    public function getEvents()
+    public function getEvents(): array
     {
         $result = [];
 
@@ -97,6 +67,36 @@ class EventRepository extends Repository
         return $result;
     }
 
+    public function getUserEvents($userId): array
+    {
+        $result = [];
+        $stmt = $this->database->connect()->prepare(
+            'select *, (select count(*) from event_participants where id_event = events.id) as participants
+                    from events join event_participants on events.id=event_participants.id_event
+                    where event_participants.id_user= :userId'
+        );
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_STR);
+        $stmt->execute();
+        $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($events as $event) {
+            $newEvent = new Event(
+                $event['title'],
+                $event['max_participants'],
+                $event['localisation'],
+                $event['date'],
+                $event['duration'],
+                $event['id_organizer'],
+                $event['description']
+            );
+            $newEvent->setId($event['id_event']);
+            $newEvent->setImage($event['image']);
+            $newEvent->setParticipants($event['participants']);
+            $result[] = $newEvent;
+        }
+        return $result;
+    }
+
     public function addEvent(Event $event): void
     {
         $stmt = $this->database->connect()->prepare(
@@ -106,6 +106,10 @@ class EventRepository extends Repository
         if(is_null($event->getImage()))
         {
             $event->setImage('defaultEvent.jpg');
+        }
+        if($event->getDescription() == '')
+        {
+            $event->setDescription('Brak opisu');
         }
         $stmt->execute([
             $event->getTitle(),
@@ -137,11 +141,11 @@ class EventRepository extends Repository
 
     public function updateEvent(Event $event)
     {
-
         $stat = $this->database->connect()->prepare(
             'update events set title= :title, localisation= :localisation, date = :date, duration= :duration,
                   description= :description, image = :image
                     where id= :id');
+
         $title = $event->getTitle();
         $localisation = $event->getLocalisation();
         $date = $event->getDate();
@@ -169,7 +173,6 @@ class EventRepository extends Repository
                 'delete from events where id = :id'
             );
             $stmt->bindParam(':id', $eventId, PDO::PARAM_STR);
-            $stmt->execute();
         }
         else
         {
@@ -178,8 +181,8 @@ class EventRepository extends Repository
             );
             $stmt->bindParam(':id_event', $eventId, PDO::PARAM_STR);
             $stmt->bindParam(':id_user', $_SESSION['id'], PDO::PARAM_STR);
-            $stmt->execute();
         }
+        $stmt->execute();
     }
 
     public function sendApplication($eventId)
@@ -228,8 +231,10 @@ class EventRepository extends Repository
         $stmt->execute();
     }
 
-    public function getReceivedApplication()
+    public function getReceivedApplication(): array
     {
+        $result = [];
+
         $stmt = $this->database->connect()->prepare(
             'select ep.id applicationId, e.title eventTitle, u.user_name userName
                    from event_applications ep
@@ -239,7 +244,7 @@ class EventRepository extends Repository
         $stmt->bindParam(':id', $_SESSION['id'], PDO::PARAM_STR);
         $stmt->execute();
         $applications = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $result = [];
+
         foreach ($applications as $application) {
             $result[] = new EventApplication(
                 $application['applicationid'],
@@ -250,8 +255,10 @@ class EventRepository extends Repository
         return $result;
     }
 
-    public function getUserApplications()
+    public function getUserApplications(): array
     {
+        $result = [];
+
         $stmt = $this->database->connect()->prepare(
             'select ep.id applicationId, e.title eventTitle, u.user_name userName
                    from event_applications ep
@@ -261,7 +268,7 @@ class EventRepository extends Repository
         $stmt->bindParam(':id', $_SESSION['id'], PDO::PARAM_STR);
         $stmt->execute();
         $applications = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $result = [];
+
         foreach ($applications as $application) {
             $result[] = new EventApplication(
                 $application['applicationid'],

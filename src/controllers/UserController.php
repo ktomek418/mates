@@ -2,7 +2,6 @@
 
 class UserController extends AppController
 {
-    private $messages = [];
     private $userRepository;
     const MAX_FILE_SIZE = 1024 * 1024;
     const SUPPORTED_TYPES = ['image/png', 'image/jpeg'];
@@ -27,7 +26,6 @@ class UserController extends AppController
         $user = $this->userRepository->getUserById($_SESSION['id']);
         $this->render('user-profile-editor', ['user' => $user]);
     }
-
     public function updateOrCreateUserDetails()
     {
         $this->checkAuth();

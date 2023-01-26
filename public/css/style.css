@@ -39,7 +39,7 @@ body {
     background: #FFFFFF66 0 0 no-repeat padding-box;
     box-shadow: inset 0 6px 6px #00000029;
     border: 1px solid #707070;
-    border-radius: 28px;;
+    border-radius: 28px;
 }
 
 .register-form{
@@ -235,6 +235,13 @@ input:focus{
     border: 1px solid #EEEEEE;
     display: flex;
     justify-content: space-around;
+}
+
+.no-valid {
+    border: 2px solid red;
+    border-radius: 28px;
+    box-shadow: 0 0 0.2em red;
+    outline: none;
 }
 
 

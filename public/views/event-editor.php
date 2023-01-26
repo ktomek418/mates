@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/b35c7465a2.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./public/js/event-editor-validator.js" defer></script>
     <link rel="stylesheet" type="text/css" href="public/css/style.css">
     <link rel="stylesheet" type="text/css" href="public/css/event-creator-form.css">
     <title>Planned</title>
