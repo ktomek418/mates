@@ -16,8 +16,8 @@
     <main>
         <header>
             <div class="search-bar">
-                <form>
-                    <input placeholder="Szukaj w wydarzeniach">
+                <form action="eventsLike" method="get">
+                    <input type="text" name="query" placeholder="Szukaj w wydarzeniach">
                 </form>
             </div>
             <div class="button" id="top-button" onclick="window.location.href='/planned'">
@@ -38,7 +38,6 @@
                 </textarea>
                 <label class="custom-file-upload">
                     <input type="file" name="file" placeholder="">
-                    <i class="fa-solid fa-image"></i>
                 </label>
                 <input type="hidden" name="eventId" value="<?=$event->getId() ?>">
                 <button type="submit">Zapisz zmiany</button>

@@ -37,8 +37,6 @@ class EventRepository extends Repository
 
     public function getEvents(): array
     {
-        $result = [];
-
         $stmt = $this->database->connect()->prepare('
             select *, (select count(*) from event_participants where id_event = events.id) as participants
             from events where :id not in(select id_user from event_participants where events.id=id_event)
@@ -48,28 +46,29 @@ class EventRepository extends Repository
         $stmt->bindParam(':id', $_SESSION['id'], PDO::PARAM_STR);
         $stmt->execute();
         $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $this->createEvents($events);
+    }
 
-        foreach ($events as $event) {
-            $newEvent = new Event(
-                $event['title'],
-                $event['max_participants'],
-                $event['localisation'],
-                $event['date'],
-                $event['duration'],
-                $event['id_organizer'],
-                $event['description'],
-            );
-            $newEvent->setId($event['id']);
-            $newEvent->setImage($event['image']);
-            $newEvent->setParticipants($event['participants']);
-            $result[] = $newEvent;
-        }
-        return $result;
+    public function getEventsByKey($searchString):array
+    {
+        $searchString = '%'.strtolower($searchString).'%';
+        $stmt = $this->database->connect()->prepare('
+            select *, (select count(*) from event_participants where id_event = events.id) as participants
+            from events where :id not in(select id_user from event_participants where events.id=id_event)
+            and :id not in(select id_user from event_applications where events.id=id_event)
+            and (select count(*) from event_participants where id_event = events.id) < max_participants
+            and (lower(events.title) like :str or lower(events.description) like :str or lower(events.localisation) like :str)
+        ');
+        $stmt->bindParam(':id', $_SESSION['id'], PDO::PARAM_STR);
+        $stmt->bindParam(':str', $searchString, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $events = $stmt->fetchAll(PDO::FETCH_ASSOC);;
+        return $this->createEvents($events);
     }
 
     public function getUserEvents($userId): array
     {
-        $result = [];
         $stmt = $this->database->connect()->prepare(
             'select *, (select count(*) from event_participants where id_event = events.id) as participants
                     from events join event_participants on events.id=event_participants.id_event
@@ -79,22 +78,24 @@ class EventRepository extends Repository
         $stmt->execute();
         $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach ($events as $event) {
-            $newEvent = new Event(
-                $event['title'],
-                $event['max_participants'],
-                $event['localisation'],
-                $event['date'],
-                $event['duration'],
-                $event['id_organizer'],
-                $event['description']
-            );
-            $newEvent->setId($event['id_event']);
-            $newEvent->setImage($event['image']);
-            $newEvent->setParticipants($event['participants']);
-            $result[] = $newEvent;
-        }
-        return $result;
+        return $this->createEvents($events);
+    }
+
+    public function getUserEventsByKey($userId, $searchString): array
+    {
+        $searchString = '%'.strtolower($searchString).'%';
+        $stmt = $this->database->connect()->prepare(
+            'select *, (select count(*) from event_participants where id_event = events.id) as participants
+                    from events join event_participants on events.id=event_participants.id_event
+                    where event_participants.id_user= :userId
+                    and (lower(events.title) like :str or lower(events.description) like :str or lower(events.localisation) like :str)
+                    ');
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_STR);
+        $stmt->bindParam(':str', $searchString, PDO::PARAM_STR);
+        $stmt->execute();
+        $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $this->createEvents($events);
     }
 
     public function addEvent(Event $event): void
@@ -289,6 +290,27 @@ class EventRepository extends Repository
             $newApplication->setImage($application['userimage']);
             $newApplication->setUserId($application['organizerid']);
             $result[] = $newApplication;
+        }
+        return $result;
+    }
+
+    private function createEvents($eventResult): array
+    {
+        $result = [];
+        foreach ($eventResult as $event) {
+            $newEvent = new Event(
+                $event['title'],
+                $event['max_participants'],
+                $event['localisation'],
+                $event['date'],
+                $event['duration'],
+                $event['id_organizer'],
+                $event['description']
+            );
+            $newEvent->setId($event['id_event']);
+            $newEvent->setImage($event['image']);
+            $newEvent->setParticipants($event['participants']);
+            $result[] = $newEvent;
         }
         return $result;
     }

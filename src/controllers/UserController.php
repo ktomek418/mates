@@ -17,7 +17,8 @@ class UserController extends AppController
     {
         $this->checkAuth();
         $user = $this->userRepository->getUserById($_SESSION['id']);
-        $this->render('user-profile', ['user' => $user]);
+        $myProfile = true;
+        $this->render('user-profile', ['user' => $user, 'myProfile' => $myProfile]);
     }
 
     public function user()
@@ -26,7 +27,8 @@ class UserController extends AppController
         {
             $this->checkAuth();
             $user = $this->userRepository->getUserById($_GET['id']);
-            $this->render('user-profile', ['user' => $user]);
+            $myProfile = false;
+            $this->render('user-profile', ['user' => $user, 'myProfile' => $myProfile]);
         }
     }
 

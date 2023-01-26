@@ -15,16 +15,23 @@
     <main>
         <header>
             <div class="search-bar">
-                <form>
-                    <input placeholder="Szukaj w wydarzeniach">
+                <form action="eventsLike" method="get">
+                    <input type="text" name="query" placeholder="Szukaj w wydarzeniach">
                 </form>
             </div>
+            <?php if ($myProfile == true): ?>
             <form method="post" action="userProfileEditor">
                 <button type="submit" id="top-button">
                     <i class="fa-solid fa-user-pen"></i>
                     Edytuj profil
                 </button>
             </form>
+            <?php else: ?>
+                <div class="button" id="top-button" onclick="window.location.href='/receivedApplication'">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Zamknij podgląd
+                </div>
+            <?php endif; ?>
         </header>
         <hr>
         <section class="user-profile">

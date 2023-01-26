@@ -39,7 +39,7 @@ class SecurityController extends AppController {
         }
 
         $_SESSION['id'] = $user->getId();
-        $_SESSION['admin'] = true;
+        $_SESSION['admin'] = $user->isAdmin();
 
 
         $url = "http://$_SERVER[HTTP_HOST]";

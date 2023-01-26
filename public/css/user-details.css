@@ -34,11 +34,9 @@
 
 label{
     display: flex;
-    height: 2em;
-    text-align: right;
-    justify-content: right;
+    justify-content: center;
     align-items: center;
-    width: 50%;
+    height: 2em;
 }
 
 label > i{
@@ -47,7 +45,9 @@ label > i{
 }
 
 label > input{
-    padding-right: 2em;
+    padding-left: 5em;
+    margin: auto;
+    width: 50%;
     text-align: center;
 }
 
@@ -55,7 +55,7 @@ label > input{
     color: #0A2647;
 }
 .user-profile-editor > form >  label > input::before{
-    content: "Dodaj zdjęcie profilowe użytkownika";
+    content: "Wybierz i dodaj zdjęcie profilowe użytkownika";
 }
 
 .user-profile-editor > form >  label > input{

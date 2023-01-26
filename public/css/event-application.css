@@ -1,0 +1,75 @@
+.applications {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.application{
+    padding-top: 1em;
+    width: 80%;
+    height: 8%;
+    display: flex;
+    align-items: center;
+}
+
+.application > img {
+    width: 3em;
+    height: 3em;
+    border-radius: 28px;
+}
+.applications > hr {
+    width: 90%;
+    height: 2px;
+    background: #EEEEEE;
+    border: 0;
+}
+.application-info {
+    padding-left: 1em;
+    width: 60%;
+}
+
+
+.application-info > a {
+    text-align: left;
+    font: normal normal normal 15px/19px Segoe UI;
+    letter-spacing: 0;
+    color: #EEEEEE;
+    margin-bottom: 0;
+    border: 0;
+}
+
+.application-info > a:link { text-decoration: none; }
+
+
+.application-info > a:visited { text-decoration: none; }
+
+
+.application-info > a:hover { text-decoration: none; }
+
+
+.application-info > a:active { text-decoration: none; }
+
+.application-info > h3 {
+    padding-left: 2em;
+    margin-top: 0;
+    margin-bottom: 0.3em;
+    text-align: left;
+    font: normal normal normal 20px/30px Segoe UI;
+    letter-spacing: 0;
+    color: #EEEEEE;
+}
+
+.application-actions {
+    padding-top: 2em;
+    width: 30%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+.application-actions > form > .application-button {
+    width: 100%;
+    border: 1px solid #EEEEEE;
+    display: flex;
+    justify-content: space-around;
+}

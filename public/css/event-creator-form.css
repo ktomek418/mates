@@ -32,7 +32,7 @@
     color: #0A2647;
 }
 
-label{
+.custom-file-upload{
     display: flex;
     height: 2em;
     text-align: right;
@@ -41,21 +41,21 @@ label{
     width: 50%;
 }
 
-label > i{
-    font-size: 1.5em;
-    padding-right: 2em;
+.custom-file-upload > input{
+    margin : auto;
+    padding-left: 3em;
 }
 
-label > input{
-    padding-right: 2em;
-    text-align: center;
+.event-creator > form > input[type="date"]::-webkit-calendar-picker-indicator {
+    width: 1.5em;
+    height: 1.5em;
 }
 
 .event-creator > form > input::placeholder, textarea::placeholder, label::placeholder{
     color: #0A2647;
 }
 .event-creator > form >  label > input::before{
-    content: "Dodaj zdjęcie dla swojego wydarzenia";
+    content: "Wybierz zdjęcie dla swojego wydarzenia";
 }
 
 .event-creator > form >  label > input{

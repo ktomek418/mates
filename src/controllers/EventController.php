@@ -34,6 +34,21 @@ class EventController extends AppController
         $this->render('events', ['events' => $events, 'planned' => $planned]);
     }
 
+    public function eventsLike()
+    {
+        $this->checkAuth();
+        $events = $this->eventRepository->getEventsByKey($_GET['query']);
+        $planned = false;
+        $this->render('events', ['events' => $events, 'planned' => $planned]);
+    }
+    public function plannedLike()
+    {
+        $this->checkAuth();
+        $events = $this->eventRepository->getUserEventsByKey($_SESSION['id'], $_GET['query']);
+        $planned = true;
+        $this->render('events', ['events' => $events, 'planned' => $planned]);
+    }
+
     public function newEvent()
     {
         $this->checkAuth();

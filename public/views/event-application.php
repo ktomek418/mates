@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/b35c7465a2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="public/css/style.css">
+    <link rel="stylesheet" type="text/css" href="public/css/event-application.css">
     <title>Planned</title>
 </head>
 <body>
@@ -14,8 +15,8 @@
         <main>
             <header>
                 <div class="search-bar">
-                    <form>
-                        <input placeholder="Szukaj w wydarzeniach">
+                    <form action="eventsLike" method="get">
+                        <input type="text" name="query" placeholder="Szukaj w wydarzeniach">
                     </form>
                 </div>
                 <?php if ($myApplications == true): ?>

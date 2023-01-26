@@ -21,6 +21,9 @@ Router::get('events', 'EventController');
 Router::get('receivedApplication', 'EventController');
 Router::get('myApplication', 'EventController');
 
+Router::post('eventsLike', 'EventController');
+Router::post('plannedLike', 'EventController');
+
 Router::get('newEvent', 'EventController');
 Router::get('eventEditor', 'EventController');
 Router::post('addEvent', 'EventController');
