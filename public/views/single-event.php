@@ -9,7 +9,7 @@
     <title>Planned</title>
 </head>
 <body>
-    <div class="project">
+    <div class="single-event">
         <div class="main-section">
             <img src="public/uploads/<?=$event->getImage() ?>">
             <ul class="event-description">

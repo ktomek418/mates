@@ -37,11 +37,12 @@ class EventRepository extends Repository
 
     public function getEvents(): array
     {
+        $result = [];
         $stmt = $this->database->connect()->prepare('
-            select *, (select count(*) from event_participants where id_event = events.id) as participants
-            from events where :id not in(select id_user from event_participants where events.id=id_event)
-            and :id not in(select id_user from event_applications where events.id=id_event)
-            and (select count(*) from event_participants where id_event = events.id) < max_participants
+            select * from events_with_participants where :id not in(select id_user from event_participants
+            where events_with_participants.id=id_event)
+            and :id not in(select id_user from event_applications where events_with_participants.id=id_event)
+            and participants < max_participants
         ');
         $stmt->bindParam(':id', $_SESSION['id'], PDO::PARAM_STR);
         $stmt->execute();
@@ -51,13 +52,16 @@ class EventRepository extends Repository
 
     public function getEventsByKey($searchString):array
     {
+        $result = [];
         $searchString = '%'.strtolower($searchString).'%';
         $stmt = $this->database->connect()->prepare('
-            select *, (select count(*) from event_participants where id_event = events.id) as participants
-            from events where :id not in(select id_user from event_participants where events.id=id_event)
-            and :id not in(select id_user from event_applications where events.id=id_event)
-            and (select count(*) from event_participants where id_event = events.id) < max_participants
-            and (lower(events.title) like :str or lower(events.description) like :str or lower(events.localisation) like :str)
+            select * from events_with_participants where :id not in(select id_user from event_participants
+            where events_with_participants.id=id_event)
+            and :id not in(select id_user from event_applications where events_with_participants.id=id_event)
+            and participants < max_participants
+            and (lower(events_with_participants.title) like :str
+                     or lower(events_with_participants.description) like :str
+                     or lower(events_with_participants.localisation) like :str)
         ');
         $stmt->bindParam(':id', $_SESSION['id'], PDO::PARAM_STR);
         $stmt->bindParam(':str', $searchString, PDO::PARAM_STR);
@@ -70,8 +74,8 @@ class EventRepository extends Repository
     public function getUserEvents($userId): array
     {
         $stmt = $this->database->connect()->prepare(
-            'select *, (select count(*) from event_participants where id_event = events.id) as participants
-                    from events join event_participants on events.id=event_participants.id_event
+            'select * from events_with_participants
+                    join event_participants on events_with_participants.id=event_participants.id_event
                     where event_participants.id_user= :userId'
         );
         $stmt->bindParam(':userId', $userId, PDO::PARAM_STR);
@@ -85,10 +89,12 @@ class EventRepository extends Repository
     {
         $searchString = '%'.strtolower($searchString).'%';
         $stmt = $this->database->connect()->prepare(
-            'select *, (select count(*) from event_participants where id_event = events.id) as participants
-                    from events join event_participants on events.id=event_participants.id_event
+            'select * from events_with_participants
+                    join event_participants on events_with_participants.id=event_participants.id_event
                     where event_participants.id_user= :userId
-                    and (lower(events.title) like :str or lower(events.description) like :str or lower(events.localisation) like :str)
+                    and (lower(events_with_participants.title) like :str
+                             or lower(events_with_participants.description) like :str
+                             or lower(events_with_participants.localisation) like :str)
                     ');
         $stmt->bindParam(':userId', $userId, PDO::PARAM_STR);
         $stmt->bindParam(':str', $searchString, PDO::PARAM_STR);
@@ -308,6 +314,9 @@ class EventRepository extends Repository
                 $event['description']
             );
             $newEvent->setId($event['id_event']);
+            if($newEvent->getId() === null){
+                $newEvent->setId($event['id']);
+            }
             $newEvent->setImage($event['image']);
             $newEvent->setParticipants($event['participants']);
             $result[] = $newEvent;
